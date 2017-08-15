@@ -1,0 +1,6 @@
+rootProject.name = 'devcon-docker-demo'
+include 'java-application'
+findProject(':java-application')?.name = 'devcon-docker-demo-java-application'
+include 'docker'
+findProject(':docker')?.name = 'devcon-docker-demo-docker'
+

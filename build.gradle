@@ -1,0 +1,14 @@
+group 'com.bt.atkinssk'
+version '1.0-SNAPSHOT'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '3.3'
+  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+}
+

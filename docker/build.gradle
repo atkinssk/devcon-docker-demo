@@ -1,0 +1,54 @@
+group 'com.bt.atkinssk'
+version '1.0-SNAPSHOT'
+
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
+//    }
+//}
+//
+//apply plugin: 'org.springframework.boot'
+//
+//
+//repositories {
+//    mavenLocal()
+//    mavenCentral()
+//}
+
+
+configurations {
+    jarFiles {
+        transitive false
+    }
+}
+
+dependencies {
+    jarFiles project(':devcon-docker-demo-java-application')
+}
+
+task copyRuntimeLibs(type: Copy) {
+    into project.buildDir
+    from configurations.jarFiles
+    from "docker"
+}
+
+
+task build(type: Exec) {
+    def applicationJarFile = configurations.jarFiles.singleFile.name
+
+    commandLine "docker",
+            "build",
+            "--build-arg", "jarFile=${applicationJarFile}",
+            "--tag=devcon-docker-demo",
+            project.buildDir
+}
+build.dependsOn copyRuntimeLibs
+copyRuntimeLibs.dependsOn ':devcon-docker-demo-java-application:assemble'
+
+
+task runImage(type: Exec) {
+    commandLine "docker", "run", "--rm", "devcon-docker-demo"
+}

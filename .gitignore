@@ -1,0 +1,6 @@
+.gradle/
+.idea/
+docker/build/
+java-application/build/libs/devcon-docker-demo-java-application-1.0-SNAPSHOT.jar
+java-application/build/
+out/
