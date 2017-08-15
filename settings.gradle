@@ -3,4 +3,6 @@ include 'java-application'
 findProject(':java-application')?.name = 'devcon-docker-demo-java-application'
 include 'docker'
 findProject(':docker')?.name = 'devcon-docker-demo-docker'
+include 'stack'
+findProject(':stack')?.name = 'devcon-docker-demo-stack'
 

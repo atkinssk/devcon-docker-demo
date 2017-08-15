@@ -1,0 +1,8 @@
+group 'com.bt.atkinssk'
+version '1.0-SNAPSHOT'
+
+
+task stackDeploy(type: Exec) {
+    commandLine "/usr/local/bin/docker",
+            "stack", "deploy", "--compose-file", "docker-stack.yml", "devcon-docker-demo"
+}
