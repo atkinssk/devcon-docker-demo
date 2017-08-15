@@ -4,3 +4,5 @@ docker/build/
 java-application/build/libs/devcon-docker-demo-java-application-1.0-SNAPSHOT.jar
 java-application/build/
 out/
+devcon-docker-demo.iws
+devcon-docker-demo.ipr
