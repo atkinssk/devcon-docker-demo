@@ -6,3 +6,8 @@ task stackDeploy(type: Exec) {
     commandLine "/usr/local/bin/docker",
             "stack", "deploy", "--compose-file", "docker-stack.yml", "devcon-docker-demo"
 }
+
+task stackRemove(type: Exec) {
+    commandLine "/usr/local/bin/docker",
+            "stack", "rm", "devcon-docker-demo"
+}
