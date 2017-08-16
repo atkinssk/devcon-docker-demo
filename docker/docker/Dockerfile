@@ -2,6 +2,8 @@ FROM openjdk:8-jdk-slim
 
 ARG jarFile
 
+EXPOSE 8080
+
 ADD docker-entrypoint.sh /app/
 RUN chmod +x /app/docker-entrypoint.sh
 
