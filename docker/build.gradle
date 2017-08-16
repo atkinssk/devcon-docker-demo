@@ -1,24 +1,6 @@
 group 'com.bt.atkinssk'
 version '1.0-SNAPSHOT'
 
-//buildscript {
-//    repositories {
-//        mavenCentral()
-//    }
-//    dependencies {
-//        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.6.RELEASE")
-//    }
-//}
-//
-//apply plugin: 'org.springframework.boot'
-//
-//
-//repositories {
-//    mavenLocal()
-//    mavenCentral()
-//}
-
-
 configurations {
     jarFiles {
         transitive false
@@ -38,6 +20,7 @@ task copyRuntimeLibs(type: Copy) {
 
 task build(type: Exec) {
     def applicationJarFile = configurations.jarFiles.singleFile.name
+    logger.info("applicationJarFile : ${applicationJarFile}")
 
     commandLine "docker",
             "build",
@@ -50,5 +33,40 @@ copyRuntimeLibs.dependsOn ':devcon-docker-demo-java-application:assemble'
 
 
 task runImage(type: Exec) {
-    commandLine "docker", "run", "--rm", "devcon-docker-demo"
+    mustRunAfter build
+    commandLine "docker",
+            "run",
+            "--rm",
+            "--name=devcon-docker-demo",
+            "--detach",
+            "--publish", "63000:8080",
+            "devcon-docker-demo"
+}
+
+task removeContainer(type: Exec) {
+    commandLine "docker",
+            "rm",
+            "--force",
+            "devcon-docker-demo"
+}
+
+task logs(type: Exec) {
+    commandLine "docker",
+            "logs",
+            "devcon-docker-demo"
+}
+
+task logsFollow(type: Exec) {
+    commandLine "docker",
+            "logs",
+            "--follow",
+            "devcon-docker-demo"
+}
+
+task runImageWithBuild {
+    dependsOn build
+    dependsOn runImage
+    doFirst {logger.info ("Build and running image")}
+    doLast {logger.info ("Finished")}
+    logger.info ("Stuff")
 }
