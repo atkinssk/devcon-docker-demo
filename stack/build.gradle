@@ -3,11 +3,11 @@ version '1.0-SNAPSHOT'
 
 
 task stackDeploy(type: Exec) {
-    commandLine "/usr/local/bin/docker",
-            "stack", "deploy", "--compose-file", "docker-stack.yml", "devcon-docker-demo"
+    commandLine "docker",
+            "stack", "deploy", "--compose-file=docker-stack.yml", "--with-registry-auth", "devcon-docker-demo"
 }
 
 task stackRemove(type: Exec) {
-    commandLine "/usr/local/bin/docker",
+    commandLine "docker",
             "stack", "rm", "devcon-docker-demo"
 }
