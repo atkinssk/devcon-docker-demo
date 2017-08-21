@@ -1,0 +1,12 @@
+group 'com.bt.atkinssk'
+version '1.0-SNAPSHOT'
+
+
+task build(type: Exec) {
+    commandLine "docker", "build", "--tag=nexus.gs.test.nat.bt.com:50489/devcon-docker-demo-filebeat", "."
+}
+
+task push(type: Exec) {
+    commandLine "docker", "push", "nexus.gs.test.nat.bt.com:50489/devcon-docker-demo-filebeat"
+}
+
