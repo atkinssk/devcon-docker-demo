@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 /**
@@ -17,6 +19,16 @@ public class HelloWorldService
     public HelloWorld helloWorld(String name)
     {
         LOGGER.info ("Service helloWorld {}", name);
-        return new HelloWorld(UUID.randomUUID().toString(), "Hello " + name);
+        try
+        {
+            return new HelloWorld(UUID.randomUUID().toString(),
+                                  "Hello " + name,
+                                  InetAddress.getLocalHost().getHostName());
+        }
+        catch (UnknownHostException e)
+        {
+            LOGGER.error("Unable to determine hostname", e);
+        }
+        return new HelloWorld(UUID.randomUUID().toString(), "Hello " + name, null);
     }
 }

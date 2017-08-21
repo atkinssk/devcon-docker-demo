@@ -7,11 +7,13 @@ public class HelloWorld
 {
     private final String id;
     private final String content;
+    private final String hostname;
 
-    public HelloWorld(String id, String content)
+    public HelloWorld(String id, String content, String hostname)
     {
         this.id = id;
         this.content = content;
+        this.hostname = hostname;
     }
 
     public String getId()
@@ -22,5 +24,20 @@ public class HelloWorld
     public String getContent()
     {
         return content;
+    }
+
+    public String getHostname()
+    {
+        return hostname;
+    }
+
+    @Override
+    public String toString()
+    {
+        return new org.apache.commons.lang3.builder.ToStringBuilder(this)
+                .append("id", id)
+                .append("content", content)
+                .append("hostname", hostname)
+                .toString();
     }
 }
