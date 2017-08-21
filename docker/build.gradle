@@ -22,45 +22,30 @@ task build(type: Exec) {
     def applicationJarFile = configurations.jarFiles.singleFile.name
     logger.info("applicationJarFile : ${applicationJarFile}")
 
-    commandLine "docker",
-            "build",
-            "--build-arg", "jarFile=${applicationJarFile}",
-            "--tag=devcon-docker-demo",
-            project.buildDir
+    commandLine "docker", "build", "--build-arg", "jarFile=${applicationJarFile}", "--tag=nexus.gs.test.nat.bt.com:50489/devcon-docker-demo", project.buildDir
 }
 build.dependsOn copyRuntimeLibs
 copyRuntimeLibs.dependsOn ':devcon-docker-demo-java-application:assemble'
 
+task push(type: Exec) {
+    commandLine "docker", "push", "nexus.gs.test.nat.bt.com:50489/devcon-docker-demo"
+}
 
 task runImage(type: Exec) {
     mustRunAfter build
-    commandLine "docker",
-            "run",
-            "--rm",
-            "--name=devcon-docker-demo",
-            "--detach",
-            "--publish", "63000:8080",
-            "devcon-docker-demo"
+    commandLine "docker", "run", "--rm", "--name=devcon-docker-demo", "--detach", "--publish", "63000:8080", "nexus.gs.test.nat.bt.com:50489/devcon-docker-demo"
 }
 
 task removeContainer(type: Exec) {
-    commandLine "docker",
-            "rm",
-            "--force",
-            "devcon-docker-demo"
+    commandLine "docker", "rm", "--force", "devcon-docker-demo"
 }
 
 task logs(type: Exec) {
-    commandLine "docker",
-            "logs",
-            "devcon-docker-demo"
+    commandLine "docker", "logs", "devcon-docker-demo"
 }
 
 task logsFollow(type: Exec) {
-    commandLine "docker",
-            "logs",
-            "--follow",
-            "devcon-docker-demo"
+    commandLine "docker", "logs", "--follow", "devcon-docker-demo"
 }
 
 task runImageWithBuild {
