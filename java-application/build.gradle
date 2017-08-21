@@ -28,5 +28,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile('javax.servlet:jstl')
     compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+    compile('net.logstash.logback:logstash-logback-encoder:4.8')
+    compile('org.apache.commons:commons-lang3:3.6')
     testCompile("junit:junit")
 }
