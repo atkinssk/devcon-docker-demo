@@ -14,3 +14,7 @@ WORKDIR /app
 ENV APP_JAR="/app/${jarFile}"
 
 CMD ["/bin/bash", "-c", "/app/docker-entrypoint.sh" ]
+
+
+RUN mkdir /logs && chmod 777 /logs
+VOLUME /logs
