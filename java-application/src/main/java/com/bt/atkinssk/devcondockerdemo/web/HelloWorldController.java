@@ -35,4 +35,14 @@ public class HelloWorldController
         LOGGER.info("Controller helloworld");
         return helloWorldService.helloWorld(name);
     }
+
+    @RequestMapping(value = "/exit", method = RequestMethod.GET)
+    public @ResponseBody String exit()
+    {
+        LOGGER.info("Controller Exit");
+        System.exit(1);
+        return null;
+    }
+
+
 }
