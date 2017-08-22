@@ -4,17 +4,30 @@ ARG jarFile
 
 EXPOSE 8080
 
-ADD docker-entrypoint.sh /app/
-RUN chmod +x /app/docker-entrypoint.sh
+ADD files/ /
+RUN chmod +x /app/*.sh
 
-ADD ${jarFile} /app/
+RUN \
+    apt-get update \
+    && apt-get install -y --no-install-recommends \
+		curl \
+	&& rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-ENV APP_JAR="/app/${jarFile}"
-
 CMD ["/bin/bash", "-c", "/app/docker-entrypoint.sh" ]
-
 
 RUN mkdir /logs && chmod 777 /logs
 VOLUME /logs
+
+
+ADD ${jarFile} /app/
+ENV APP_JAR="/app/${jarFile}"
+
+
+HEALTHCHECK \
+    --interval=10s \
+    --timeout=5s \
+    --start-period=10s \
+    --retries=2 \
+    CMD /app/healthcheck.sh
