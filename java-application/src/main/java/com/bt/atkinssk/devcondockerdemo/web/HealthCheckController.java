@@ -23,20 +23,18 @@ public class HealthCheckController
     HealthCheckService healthCheckStatus;
 
     @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
-    public HealthCheckStatus healthcheck()
+    public String healthcheck()
     {
         LOGGER.info("Get current healthcheck status");
         HealthCheckStatus status = healthCheckStatus.getStatus();
         LOGGER.info("Current healthcheck status {}", status);
-        return status;
+        return status.toString();
     }
 
     @RequestMapping(value = "/healthcheck/{status}", method = RequestMethod.GET)
     public HealthCheckStatus status(@PathVariable("status") HealthCheckStatus status)
     {
         LOGGER.info("Set Healthcheck status to {}", status);
-//        HealthCheckStatus newStatus = HealthCheckStatus.valueOf(status);
-//        healthCheckStatus.setStatus(newStatus);
         healthCheckStatus.setStatus(status);
         return healthCheckStatus.getStatus();
     }
