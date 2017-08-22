@@ -5,7 +5,8 @@ STATUS=$?
 if [ $STATUS -eq  0 ]
 then
     echo "Current healthcheck ${HEALTH}"
-    test "${HEALTH}" = "HEALTHY"
+
+    echo "${HEALTH}" | grep '"HEALTHY"'
     STATUS=$?
 fi
 

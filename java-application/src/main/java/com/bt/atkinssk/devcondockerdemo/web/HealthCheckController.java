@@ -1,5 +1,6 @@
 package com.bt.atkinssk.devcondockerdemo.web;
 
+import com.bt.atkinssk.devcondockerdemo.domain.HealthCheck;
 import com.bt.atkinssk.devcondockerdemo.domain.HealthCheckStatus;
 import com.bt.atkinssk.devcondockerdemo.service.HealthCheckService;
 import org.slf4j.Logger;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,23 +20,25 @@ public class HealthCheckController
     private static final Logger LOGGER = LoggerFactory.getLogger(HealthCheckController.class);
 
     @Autowired
-    HealthCheckService healthCheckStatus;
+    HealthCheckService healthCheckService;
 
     @RequestMapping(value = "/healthcheck", method = RequestMethod.GET)
-    public String healthcheck()
+    public HealthCheck healthcheck()
     {
         LOGGER.info("Get current healthcheck status");
-        HealthCheckStatus status = healthCheckStatus.getStatus();
+        HealthCheck status = healthCheckService.getStatus();
         LOGGER.info("Current healthcheck status {}", status);
-        return status.toString();
+        return status;
     }
 
-    @RequestMapping(value = "/healthcheck/{status}", method = RequestMethod.GET)
-    public HealthCheckStatus status(@PathVariable("status") HealthCheckStatus status)
+    @RequestMapping(value = "/healthcheck/{newStatus}", method = RequestMethod.GET)
+    public HealthCheck status(@PathVariable("newStatus") HealthCheckStatus newStatus)
     {
-        LOGGER.info("Set Healthcheck status to {}", status);
-        healthCheckStatus.setStatus(status);
-        return healthCheckStatus.getStatus();
+        LOGGER.info("Set Healthcheck status to {}", newStatus);
+        healthCheckService.setStatus(newStatus);
+        HealthCheck status = healthCheckService.getStatus();
+        LOGGER.info("Current healthcheck status {}", status);
+        return status;
     }
 
 
