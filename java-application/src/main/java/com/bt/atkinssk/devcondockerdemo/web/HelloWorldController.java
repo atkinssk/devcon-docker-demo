@@ -1,6 +1,7 @@
 package com.bt.atkinssk.devcondockerdemo.web;
 
-import com.bt.atkinssk.devcondockerdemo.Application;
+import com.bt.atkinssk.devcondockerdemo.domain.HelloWorld;
+import com.bt.atkinssk.devcondockerdemo.service.HelloWorldService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +31,11 @@ public class HelloWorldController
     }
 
     @RequestMapping(value = "/helloworld", method = RequestMethod.GET)
-    public @ResponseBody HelloWorld helloWorld(@RequestParam(value="name", required=false, defaultValue="Stranger") String name)
+    public @ResponseBody
+    HelloWorld helloWorld(@RequestParam(value="name", required=false, defaultValue="Stranger") String name)
     {
         LOGGER.info("Controller helloworld");
         return helloWorldService.helloWorld(name);
     }
-
-    @RequestMapping(value = "/exit", method = RequestMethod.GET)
-    public @ResponseBody String exit()
-    {
-        LOGGER.info("Controller Exit");
-        System.exit(1);
-        return null;
-    }
-
 
 }

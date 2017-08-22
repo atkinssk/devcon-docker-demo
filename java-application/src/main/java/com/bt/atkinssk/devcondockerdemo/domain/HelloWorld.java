@@ -1,4 +1,4 @@
-package com.bt.atkinssk.devcondockerdemo.web;
+package com.bt.atkinssk.devcondockerdemo.domain;
 
 /**
  * Created by 802998369 on 16/08/2017.

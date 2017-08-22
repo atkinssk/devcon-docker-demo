@@ -1,5 +1,6 @@
-package com.bt.atkinssk.devcondockerdemo.web;
+package com.bt.atkinssk.devcondockerdemo.service;
 
+import com.bt.atkinssk.devcondockerdemo.domain.HelloWorld;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
