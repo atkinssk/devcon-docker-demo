@@ -1,57 +1,25 @@
 group 'com.bt.atkinssk'
 version '1.0-SNAPSHOT'
 
+apply from: "$rootDir/docker.gradle"
+
 configurations {
-    jarFiles {
+    docker {
         transitive false
     }
 }
 
 dependencies {
-    jarFiles project(':devcon-docker-demo-java-application')
+    docker project(':devcon-docker-demo-java-application')
 }
 
-task copyRuntimeLibs(type: Copy) {
-    into project.buildDir
-    from configurations.jarFiles
-    from "docker"
+docker{
+    buildContext = 'docker'
+    registry = 'nexus.gs.test.nat.bt.com:50489'
+    publishedPorts = ['63000:8080']
+    removeAfterRun = false
+    buildArgs = [ "jarFile=${configurations.docker.singleFile.name}" ]
 }
 
+dockerPrepare.dependsOn ':devcon-docker-demo-java-application:assemble'
 
-task build(type: Exec) {
-    def applicationJarFile = configurations.jarFiles.singleFile.name
-    logger.info("applicationJarFile : ${applicationJarFile}")
-
-    commandLine "docker", "build", "--build-arg", "jarFile=${applicationJarFile}", "--tag=nexus.gs.test.nat.bt.com:50489/devcon-docker-demo", project.buildDir
-}
-build.dependsOn copyRuntimeLibs
-copyRuntimeLibs.dependsOn ':devcon-docker-demo-java-application:assemble'
-
-task push(type: Exec) {
-    commandLine "docker", "push", "nexus.gs.test.nat.bt.com:50489/devcon-docker-demo"
-}
-
-task runImage(type: Exec) {
-    mustRunAfter build
-    commandLine "docker", "run", "--rm", "--name=devcon-docker-demo", "--detach", "--publish", "63000:8080", "nexus.gs.test.nat.bt.com:50489/devcon-docker-demo"
-}
-
-task removeContainer(type: Exec) {
-    commandLine "docker", "rm", "--force", "devcon-docker-demo"
-}
-
-task logs(type: Exec) {
-    commandLine "docker", "logs", "devcon-docker-demo"
-}
-
-task logsFollow(type: Exec) {
-    commandLine "docker", "logs", "--follow", "devcon-docker-demo"
-}
-
-task runImageWithBuild {
-    dependsOn build
-    dependsOn runImage
-    doFirst {logger.info ("Build and running image")}
-    doLast {logger.info ("Finished")}
-    logger.info ("Stuff")
-}

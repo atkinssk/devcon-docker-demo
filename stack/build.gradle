@@ -1,13 +1,21 @@
 group 'com.bt.atkinssk'
 version '1.0-SNAPSHOT'
 
+apply from: "$rootDir/docker.gradle"
 
-task stackDeploy(type: Exec) {
-    commandLine "docker",
-            "stack", "deploy", "--compose-file=docker-stack.yml", "--with-registry-auth", "devcon-docker-demo"
+docker{
+    registry = 'nexus.gs.test.nat.bt.com:50489'
+    stackName = 'devcon-docker-demo'
 }
 
-task stackRemove(type: Exec) {
-    commandLine "docker",
-            "stack", "rm", "devcon-docker-demo"
+configurations {
+    dockerStack {
+        transitive false
+    }
 }
+
+dependencies {
+    dockerStack project(":devcon-docker-demo-docker")
+    dockerStack project(":devcon-docker-demo-filebeat")
+}
+

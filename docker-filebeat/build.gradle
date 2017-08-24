@@ -1,12 +1,9 @@
 group 'com.bt.atkinssk'
 version '1.0-SNAPSHOT'
 
+apply from: "$rootDir/docker.gradle"
 
-task build(type: Exec) {
-    commandLine "docker", "build", "--tag=nexus.gs.test.nat.bt.com:50489/devcon-docker-demo-filebeat", "."
+docker{
+    buildContext = 'docker'
+    registry = 'nexus.gs.test.nat.bt.com:50489'
 }
-
-task push(type: Exec) {
-    commandLine "docker", "push", "nexus.gs.test.nat.bt.com:50489/devcon-docker-demo-filebeat"
-}
-

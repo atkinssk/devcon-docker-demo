@@ -8,7 +8,7 @@ volumes:
 services:
 
   java-application:
-    image: nexus.gs.test.nat.bt.com/devcon-docker-demo
+    image: nexus.gs.test.nat.bt.com/devcon-docker-demo/devcon-docker-demo-docker
     ports:
       - "63000:8080"
     volumes:
@@ -25,7 +25,7 @@ services:
         window: 2m
 
   filebeat:
-    image: nexus.gs.test.nat.bt.com/devcon-docker-demo-filebeat
+    image: nexus.gs.test.nat.bt.com/devcon-docker-demo/devcon-docker-demo-filebeat
     command: [ filebeat, -e, -v ]
     volumes:
       - logs:/logs
@@ -39,32 +39,6 @@ services:
         delay: 20s
         max_attempts: 3
         window: 2m
-
-
-
-
-#  zookeeper:
-#    image: wurstmeister/zookeeper
-#    ports:
-#      - "2181:2181"
-#
-#  kafka:
-#    image: wurstmeister/kafka-docker:latest
-#    ports:
-#      - target: 9094
-#        published: 9094
-#        protocol: tcp
-#        mode: host
-#    environment:
-#      HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
-#      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-#      KAFKA_ADVERTISED_PROTOCOL_NAME: OUTSIDE
-#      KAFKA_ADVERTISED_PORT: 9094
-#      KAFKA_PROTOCOL_NAME: INSIDE
-#      KAFKA_PORT: 9092
-#    volumes:
-#      - /var/run/docker.sock:/var/run/docker.sock
 
 
   elasticsearch:

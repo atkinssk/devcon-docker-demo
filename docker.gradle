@@ -1,0 +1,12 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url 'https://collaborate.bt.com/artefacts/content/repositories/btgs-andes-sqe-snapshots' }
+        maven { url 'https://collaborate.bt.com/artefacts/content/repositories/btgs-andes-sqe-releases' }
+    }
+    dependencies {
+        classpath group: 'com.bt.rsqe.gradle.plugins', name: 'gradle-docker-plugin', version: '1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: com.bt.rsqe.gradle.plugins.docker.DockerPlugin

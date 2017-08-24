@@ -6,5 +6,5 @@ findProject(':docker')?.name = 'devcon-docker-demo-docker'
 include 'stack'
 findProject(':stack')?.name = 'devcon-docker-demo-stack'
 include 'docker-filebeat'
-findProject(':docker-filebeat')?.name = 'devcon-docker-demo-docker-filebeat'
+findProject(':docker-filebeat')?.name = 'devcon-docker-demo-filebeat'
 
