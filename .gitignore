@@ -6,3 +6,4 @@ java-application/build/
 out/
 devcon-docker-demo.iws
 devcon-docker-demo.ipr
+docker-filebeat/build/
